@@ -46,14 +46,18 @@ def logedIN():
 def getvalue():
     site_name = request.form['website']
     ans = output(site_name)
+    print(ans)
     if ans == -1:
         return render_template('pass.html', n="Something went wrong")
     return render_template('pass.html',n=ans)
 
 def output(site_name):
+    print(site_name)
     #site_name = input("Please Enter The Website Name : ")
     try:
+        print(site_name)
         res = requests.get('https://www.whois.com/whois/'+site_name)
+
         website = BeautifulSoup(res.text,'html.parser')
 
         res1 = requests.get('https://www.urlvoid.com/scan/'+site_name)
@@ -65,7 +69,7 @@ def output(site_name):
 
         abc = ''
         abc = str(domainInfo_2[0])
-        abc = abc.replace('<span class="label label-success">', '').replace("/44</span>",'').replace('<span class="label label-danger">','')
+        abc = abc.replace('<span class="label label-success">', '').replace("/38</span>",'').replace('<span class="label label-danger">','')
         abc = int(abc)
 
         tag = []
@@ -94,7 +98,7 @@ def output(site_name):
         risky = ['shopiiee.com','white-stones.in','jollyfashion.in',
         'fabricmaniaa.com','takesaree.com','assuredkart.in',
         'republicsaleoffers.myshopify.com','fabricwibes.com','efinancetic.com',
-        'thefabricshome.com','thermoclassic.site','kasmira.in','amaz0n.net','',None]
+        'thefabricshome.com','thermoclassic.site','kasmira.in','amaz0n.net', 'westtside.in','',None]
 
         # To check using dates : --
         def dateCheck(points):
@@ -128,7 +132,7 @@ def output(site_name):
             points = dateCheck(points)
             points = risk(points)
             points = url(points,abc)
-
+            print(ans)
             if points <= 1:
                 ans ='Risky'
                 risky.append(res.get('Domain:'))
@@ -140,7 +144,9 @@ def output(site_name):
                 print('Error')
             return ans,points
         ans = final(points,abc)
+        print(ans)
         return ans
     except:
+        print('jojo')
         return -1
 
